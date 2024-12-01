@@ -1,0 +1,18 @@
+# Deployment Guide for Portfolio Site
+
+## Backend Deployment (Flask)
+1. Install dependencies: `pip install -r requirements.txt`.
+2. Run the server locally: `python app.py`.
+3. To deploy:
+   - Use Render or Railway.
+   - Push the backend folder and set up a web service.
+
+## Frontend Deployment (React)
+1. Create a React app: `npx create-react-app my-portfolio`.
+2. Add your components and connect them to the backend API.
+3. Build the app: `npm run build`.
+4. Deploy the `build` folder using Vercel or Netlify.
+
+## Notes
+- Ensure the backend and frontend are properly linked using the API URL.
+- Test both light and dark modes on various devices.
