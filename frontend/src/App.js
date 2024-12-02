@@ -1,10 +1,10 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
 import Skills from './components/Skills';
 import Projects from './components/Projects';
-import { motion } from 'framer-motion';
 
 const SectionWrapper = ({ children, className }) => (
   <motion.div
@@ -33,17 +33,17 @@ function App() {
       </SectionWrapper>
 
       {/* Skills Section */}
-      <SectionWrapper>
+      <SectionWrapper className="bg-blue">
         <Skills />
       </SectionWrapper>
 
       {/* Projects Section */}
-      <SectionWrapper className="bg-dark">
+      <SectionWrapper className="bg-purple">
         <Projects />
       </SectionWrapper>
 
       {/* Footer Section */}
-      <footer className="text-center p-3 bg-dark text-white">
+      <footer className="text-center p-3 bg-yellow text-white">
         <p>
           Contact me at: <a href="mailto:ssrohaan178@gmail.com">ssrohaan178@gmail.com</a>
         </p>

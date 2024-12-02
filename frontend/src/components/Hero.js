@@ -18,13 +18,24 @@ const Hero = () => {
             I am a passionate BTech student majoring in computer science engineering with an interest in machine learning.
             I specialize in creating solutions that enhance productivity and efficiency.
           </p>
-          <motion.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => window.location.href = 'mailto:ssrohaan178@gmail.com'}
-          >
-            Contact Me
-          </motion.button>
+          <div className="hero-buttons">
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => window.location.href = 'mailto:ssrohaan178@gmail.com'}
+            >
+              Contact Me
+            </motion.button>
+            <motion.a
+              href="/resume.pdf" // Path to your resume file
+              download="Rohaan_Resume.pdf" // Suggested file name when downloaded
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              className="download-btn"
+            >
+              Download Resume
+            </motion.a>
+          </div>
         </div>
         <motion.div
           className="hero-image"
@@ -32,7 +43,7 @@ const Hero = () => {
           animate={{ scale: 1 }}
           transition={{ duration: 1 }}
         >
-          <img src="https://via.placeholder.com/300" alt="Rohaan" />
+          <img src="https://via.placeholder.com/300" alt="Rohaan's Profile" />
         </motion.div>
       </div>
     </motion.div>

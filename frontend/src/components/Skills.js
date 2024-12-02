@@ -1,39 +1,69 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 
-const Skills = () => {
-  const [skills, setSkills] = useState([]);
-
-  useEffect(() => {
-    axios.get('http://127.0.0.1:5000/api/skills')
-      .then(response => setSkills(response.data))
-      .catch(error => console.error("Error fetching skills:", error));
-  }, []);
+const SkillCategory = ({ title, children }) => {
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <motion.div
-      id="skills"
-      className="section"
-      initial="hidden"
-      animate="visible"
-      variants={{
-        hidden: { opacity: 0 },
-        visible: { opacity: 1, transition: { staggerChildren: 0.2 } }
-      }}
-    >
+    <div className="skill-category">
+      <div className="skill-header" onClick={() => setIsOpen(!isOpen)}>
+        <div className="skill-title">{title}</div>
+        <motion.div
+          className="arrow"
+          initial={{ rotate: 0 }}
+          animate={{ rotate: isOpen ? 180 : 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          ▼
+        </motion.div>
+      </div>
+      {isOpen && (
+        <motion.div
+          className="skill-content"
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: "auto" }}
+          transition={{ duration: 0.5 }}
+        >
+          {children}
+        </motion.div>
+      )}
+    </div>
+  );
+};
+
+const Skills = () => {
+  return (
+    <div className="skills-section">
       <h2>Skills</h2>
-      <ul>
-        {skills.map((skill, index) => (
-          <motion.li
-            key={index}
-            variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }}
-          >
-            <strong>{skill.name}</strong>: {skill.level}
-          </motion.li>
-        ))}
-      </ul>
-    </motion.div>
+      <p> </p>
+      <div className="skills-wrapper">
+        <SkillCategory title="Programming Languages">
+          <ul>
+            <li>C</li>
+            <li>Java</li>
+            <li>JavaScript</li>
+            <li>Python</li>
+            <li>TypeScript</li>
+          </ul>
+        </SkillCategory>
+        <SkillCategory title="Technologies">
+          <ul>
+            <li>Docker</li>
+            <li>Git</li>
+            <li>MySQL</li>
+            <li>React</li>
+            <li>Node.js</li>
+          </ul>
+        </SkillCategory>
+        <SkillCategory title="IT Constructs">
+          <ul>
+            <li>Object-Oriented Programming</li>
+            <li>Data Structures</li>
+            <li>Algorithms</li>
+          </ul>
+        </SkillCategory>
+      </div>
+    </div>
   );
 };
 
