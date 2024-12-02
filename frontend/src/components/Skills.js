@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { motion } from 'framer-motion';
 
 const Skills = () => {
   const [skills, setSkills] = useState([]);
@@ -11,16 +12,28 @@ const Skills = () => {
   }, []);
 
   return (
-    <div className="section container">
+    <motion.div
+      id="skills"
+      className="section"
+      initial="hidden"
+      animate="visible"
+      variants={{
+        hidden: { opacity: 0 },
+        visible: { opacity: 1, transition: { staggerChildren: 0.2 } }
+      }}
+    >
       <h2>Skills</h2>
       <ul>
         {skills.map((skill, index) => (
-          <li key={index}>
+          <motion.li
+            key={index}
+            variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }}
+          >
             <strong>{skill.name}</strong>: {skill.level}
-          </li>
+          </motion.li>
         ))}
       </ul>
-    </div>
+    </motion.div>
   );
 };
 

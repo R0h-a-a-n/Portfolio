@@ -1,25 +1,57 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navbar from './Navbar';
-import About from './About';
-import Skills from './Skills';
-import Projects from './Projects';
+import Navbar from './components/Navbar';
+import Hero from './components/Hero';
+import About from './components/About';
+import Skills from './components/Skills';
+import Projects from './components/Projects';
+import { motion } from 'framer-motion';
+
+const SectionWrapper = ({ children, className }) => (
+  <motion.div
+    className={`section-wrapper ${className}`}
+    initial={{ opacity: 0, y: 50 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.8 }}
+    viewport={{ once: true }}
+  >
+    {children}
+  </motion.div>
+);
 
 function App() {
   return (
-    <Router>
-      <div>
-        {/* Navbar Section */}
-        <Navbar />
+    <div>
+      {/* Navbar Section */}
+      <Navbar />
 
-        {/* Define Routes */}
-        <Routes>
-          <Route path="/" element={<About />} />
-          <Route path="/skills" element={<Skills />} />
-          <Route path="/projects" element={<Projects />} />
-        </Routes>
-      </div>
-    </Router>
+      {/* Hero Section */}
+      <Hero />
+
+      {/* About Section */}
+      <SectionWrapper className="bg-light">
+        <About />
+      </SectionWrapper>
+
+      {/* Skills Section */}
+      <SectionWrapper>
+        <Skills />
+      </SectionWrapper>
+
+      {/* Projects Section */}
+      <SectionWrapper className="bg-dark">
+        <Projects />
+      </SectionWrapper>
+
+      {/* Footer Section */}
+      <footer className="text-center p-3 bg-dark text-white">
+        <p>
+          Contact me at: <a href="mailto:ssrohaan178@gmail.com">ssrohaan178@gmail.com</a>
+        </p>
+        <p>
+          GitHub: <a href="https://github.com/R0h-a-a-n" target="_blank" rel="noopener noreferrer">R0h-a-a-n</a>
+        </p>
+      </footer>
+    </div>
   );
 }
 
