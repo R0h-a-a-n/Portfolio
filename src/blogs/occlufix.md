@@ -4,11 +4,6 @@ summary: A causal inference platform for multivariate time series data.
 slug: occlufix-face-inpainting-with-perceptual-and-adversarial-losses
 ---
 
-title: Occlufix – Face inpainting model Unet based
-summary: A U-Net-based face inpainting model leveraging perceptual, adversarial, and style-aware loss strategies.
-slug: occlufix-face-inpainting-with-perceptual-and-adversarial-losses
----------------------------------------------------------------------
-
 # Occlufix – Face Inpainting with Perceptual and Adversarial Losses
 
 Occlufix is a deep learning–based face inpainting model built using a modified U-Net architecture to restore occluded or masked facial regions. The model was trained on the CelebA dataset and leverages both **low-level and high-level supervision signals** to generate photorealistic, structure-preserving results.
