@@ -20,16 +20,17 @@ export default function Navbar() {
     <nav className="w-full flex items-center justify-between px-6 py-6 md:px-16 font-sans text-black">
       {/* Left: Logo and Coded */}
       <div className="flex items-center space-x-2">
-        <div className="bg-black text-white rounded w-8 h-8 flex items-center justify-center font-bold text-lg">cb</div>
+        <div className="bg-black text-white rounded w-8 h-8 flex items-center justify-center font-bold text-lg">R</div>
         <span className="text-sm">© coded by Rohaan</span>
       </div>
       {/* Center: Navigation */}
       <div className="hidden md:flex space-x-16 font-bold text-base">
-        <button onClick={handleHomeClick} className="focus:outline-none">Home</button>
-        <button onClick={handleProjectsClick} className="focus:outline-none">Projects</button>
+        <button onClick={handleHomeClick} className="focus:outline">Home</button>
+        <button onClick={handleProjectsClick} className="focus:outline">Projects</button>
         <Link to="/blog">Blog</Link>
       </div>
       {/* Right: Contact */}
+
       <div>
         <a href="#contact" className="font-bold text-base flex items-center gap-1">Contact <span className="text-xs">↗</span></a>
       </div>
