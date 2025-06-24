@@ -1,6 +1,8 @@
 import { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import Hero from './Hero';
+import Footer from './Footer';
+import { useNavigate } from 'react-router-dom';
 // import Navbar from './Navbar';
 
 function useSectionFade(ref, threshold = 0.2, minOpacity = 0.1) {
@@ -47,10 +49,15 @@ function useSectionFade(ref, threshold = 0.2, minOpacity = 0.1) {
 export default function Home() {
   const summaryRef = useRef(null);
   const skillsRef  = useRef(null);
+  const projectsRef = useRef(null);
+  const footerRef = useRef(null);
+  const navigate = useNavigate();
 
   // 20% threshold, floor at 10% opacity
   const summaryOpacity = useSectionFade(summaryRef, 0.2, 0.1);
   const skillsOpacity  = useSectionFade(skillsRef,  0.2, 0.1);
+  const projectsOpacity = useSectionFade(projectsRef, 0.2, 0.1);
+  const footerOpacity = useSectionFade(footerRef, 0.2, 0.1);
 
   return (
     <div>
@@ -197,6 +204,38 @@ export default function Home() {
           </div>
         </div>
       </motion.section>
+
+      {/* — PROJECTS SECTION — */}
+      <motion.section
+        ref={projectsRef}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: projectsOpacity }}
+        transition={{ duration: 0.5 }}
+        className="w-full min-h-screen text-black px-6 py-32 flex justify-center items-center relative"
+      >
+        <div className="text-center">
+          <h2 className="text-5xl md:text-6xl font-bold text-black mb-4">Projects</h2>
+          <p className="text-lg text-gray-700 mb-8">
+            Here are some of the projects I'm proud of.
+          </p>
+          <button
+            onClick={() => navigate('/projects')}
+            className="inline-block bg-black text-white font-semibold py-3 px-8 rounded-md hover:bg-gray-800 transition-colors duration-300"
+          >
+            View All Projects
+          </button>
+        </div>
+      </motion.section>
+
+      {/* -- FOOTER SECTION -- */}
+      <motion.div
+        ref={footerRef}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: footerOpacity }}
+        transition={{ duration: 0.5 }}
+      >
+        <Footer />
+      </motion.div>
     </div>
   );
 }

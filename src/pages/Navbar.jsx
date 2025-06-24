@@ -1,38 +1,67 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 export default function Navbar() {
   const navigate = useNavigate();
+  const location = useLocation();
 
   // Navigate to /projects on click
-  const handleProjectsClick = (e) => {
-    e.preventDefault();
+  const handleProjectsClick = () => {
     navigate('/projects');
   };
 
   // Navigate to / on Home click
-  const handleHomeClick = (e) => {
-    e.preventDefault();
-    navigate('/');
+  const handleHomeClick = () => {
+    if (location.pathname === '/') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      navigate('/');
+    }
+  };
+
+  const handleContactClick = () => {
+    if (location.pathname === '/') {
+      document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      navigate('/#contact');
+    }
+  };
+
+  const navItemVariants = {
+    initial: { y: 0 },
+    hover: { y: -2 },
   };
 
   return (
-    <nav className="w-full flex items-center justify-between px-6 py-6 md:px-16 font-sans text-black">
-      {/* Left: Logo and Coded */}
-      <div className="flex items-center space-x-2">
-        <div className="bg-black text-white rounded w-8 h-8 flex items-center justify-center font-bold text-lg">R</div>
-        <span className="text-sm">© coded by Rohaan</span>
+    <nav className="w-full flex justify-between items-center h-20 px-8 bg-transparent text-black">
+      {/* Left: Logo */}
+      <div className="font-bold text-lg">
+        <button onClick={handleHomeClick} className="focus:outline-none">Rohaan</button>
       </div>
-      {/* Center: Navigation */}
-      <div className="hidden md:flex space-x-16 font-bold text-base">
-        <button onClick={handleHomeClick} className="focus:outline">Home</button>
-        <button onClick={handleProjectsClick} className="focus:outline">Projects</button>
-        <Link to="/blog">Blog</Link>
-      </div>
-      {/* Right: Contact */}
 
+      {/* Center: Navigation */}
+      <div className="hidden md:flex flex-col items-center">
+        <div className="flex space-x-16 font-bold text-base">
+          <motion.button variants={navItemVariants} whileHover="hover" onClick={handleHomeClick} className="focus:outline-none">Home</motion.button>
+          <motion.button variants={navItemVariants} whileHover="hover" onClick={handleProjectsClick} className="focus:outline-none">Projects</motion.button>
+          <motion.div variants={navItemVariants} whileHover="hover">
+            <Link to="/blog">Blog</Link>
+          </motion.div>
+        </div>
+        <motion.div
+          className="h-px bg-black mt-2"
+          initial={{ width: 0 }}
+          animate={{ width: "100%" }}
+          transition={{ duration: 1, delay: 0.5 }}
+        />
+      </div>
+
+      {/* Right: Contact */}
       <div>
-        <a href="#contact" className="font-bold text-base flex items-center gap-1">Contact <span className="text-xs">↗</span></a>
+        <button onClick={handleContactClick} className="font-bold text-base flex items-center gap-1 focus:outline-none">
+          Contact <span className="text-xs">↗</span>
+        </button>
       </div>
     </nav>
   );
