@@ -1,4 +1,8 @@
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { useRef, useEffect } from 'react';
+import { useInView } from 'framer-motion';
+import Tilt from 'react-parallax-tilt';
 
 function GitHubIcon() {
   return (
@@ -15,8 +19,79 @@ function slugify(title) {
     .replace(/(^-|-$)+/g, '');
 }
 
-function ProjectsPage() {
+function ProjectCard({ project }) {
   const navigate = useNavigate();
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.5 });
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
+  };
+
+  return (
+    <section
+      ref={ref}
+      className="min-h-screen w-full flex justify-center items-center snap-center"
+    >
+      <Tilt
+        glareEnable={true}
+        glareMaxOpacity={0.18}
+        glareColor="#fff"
+        glarePosition="all"
+        tiltMaxAngleX={12}
+        tiltMaxAngleY={12}
+        scale={1.04}
+        transitionSpeed={1200}
+        className="w-full flex justify-center"
+      >
+        <motion.div
+          variants={cardVariants}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+          className="max-w-4xl w-full rounded-xl border-2 border-black shadow-[8px_8px_0px_rgba(0,0,0,1)] bg-white/70 backdrop-blur-lg flex flex-col transition-all duration-300 hover:shadow-[10px_10px_0px_rgba(0,0,0,1)] hover:-translate-x-1 hover:-translate-y-1 cursor-pointer"
+          onClick={() => navigate(`/blog/${project.slug}`)}
+          tabIndex={0}
+          role="button"
+          aria-label={`Read more about ${project.title}`}
+        >
+          <div className="flex items-center justify-between p-4 border-b-2 border-black">
+            <h2 className="text-2xl md:text-3xl font-extrabold text-gray-900">{project.title}</h2>
+            <a
+              href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-lg font-bold text-gray-900 hover:text-indigo-600 transition-colors duration-200"
+              aria-label="GitHub Repository"
+              onClick={e => e.stopPropagation()}
+            >
+              <GitHubIcon />
+              <span>GitHub</span>
+            </a>
+          </div>
+
+          <div className="p-6">
+            <ul className="list-disc pl-6 text-base md:text-lg text-gray-800 font-medium space-y-3 leading-relaxed">
+              {project.bullets.map((b, i) => (
+                <li key={i}>{b}</li>
+              ))}
+            </ul>
+          </div>
+        </motion.div>
+      </Tilt>
+    </section>
+  );
+}
+
+function ProjectsPage() {
+  const scrollContainerRef = useRef(null);
+
+  useEffect(() => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTop = 0;
+    }
+  }, []);
+
   const projects = [
     {
       title: 'Causana – Temporal Causal Inference Explorer',
@@ -54,45 +129,9 @@ function ProjectsPage() {
   ];
 
   return (
-    <div className="w-full min-h-screen snap-y snap-mandatory overflow-y-scroll px-2">
+    <div ref={scrollContainerRef} className="w-full h-screen snap-y snap-mandatory overflow-y-scroll">
       {projects.map((project) => (
-        <section
-          key={project.title}
-          className="min-h-screen w-full flex justify-center items-center snap-center"
-        >
-          <div
-            className="max-w-4xl w-full rounded-3xl border border-gray-300 shadow-2xl bg-white/60 backdrop-blur-md px-6 md:px-10 py-8 md:py-10 relative flex flex-col gap-6 transition-all duration-300 hover:scale-[1.015] hover:shadow-[0_8px_24px_rgba(0,0,0,0.15)] cursor-pointer"
-            onClick={() => navigate(`/blog/${project.slug}`)}
-            tabIndex={0}
-            role="button"
-            aria-label={`Read more about ${project.title}`}
-          >
-            {/* Gradient Accent Bar */}
-            <div className="absolute top-8 left-0 h-10 w-1 rounded-full bg-gradient-to-b from-indigo-500 via-pink-400 to-yellow-400" />
-
-            {/* Title & GitHub */}
-            <div className="flex items-center justify-between pl-6 pr-2">
-              <h2 className="text-2xl md:text-3xl font-extrabold text-gray-900">{project.title}</h2>
-              <a
-                href={project.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-black text-gray-700 transition-colors duration-200"
-                aria-label="GitHub Repository"
-                onClick={e => e.stopPropagation()}
-              >
-                <GitHubIcon />
-              </a>
-            </div>
-
-            {/* Bullets */}
-            <ul className="list-disc pl-12 pr-4 text-base md:text-lg text-gray-800 font-medium space-y-4 leading-relaxed">
-              {project.bullets.map((b, i) => (
-                <li key={i}>{b}</li>
-              ))}
-            </ul>
-          </div>
-        </section>
+        <ProjectCard key={project.slug} project={project} />
       ))}
     </div>
   );

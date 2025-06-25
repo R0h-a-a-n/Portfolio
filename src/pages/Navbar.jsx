@@ -6,12 +6,10 @@ export default function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Navigate to /projects on click
   const handleProjectsClick = () => {
     navigate('/projects');
   };
 
-  // Navigate to / on Home click
   const handleHomeClick = () => {
     if (location.pathname === '/') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -35,15 +33,12 @@ export default function Navbar() {
 
   return (
     <nav className="w-full flex justify-between items-center h-20 px-8 bg-transparent text-black">
-      {/* Left: Logo */}
       <div className="font-bold text-lg">
-        <button onClick={handleHomeClick} className="focus:outline-none">Rohaan</button>
+        <button onClick={handleHomeClick} className="focus:outline-none">Home</button>
       </div>
 
-      {/* Center: Navigation */}
       <div className="hidden md:flex flex-col items-center">
         <div className="flex space-x-16 font-bold text-base">
-          <motion.button variants={navItemVariants} whileHover="hover" onClick={handleHomeClick} className="focus:outline-none">Home</motion.button>
           <motion.button variants={navItemVariants} whileHover="hover" onClick={handleProjectsClick} className="focus:outline-none">Projects</motion.button>
           <motion.div variants={navItemVariants} whileHover="hover">
             <Link to="/blog">Blog</Link>
@@ -57,7 +52,6 @@ export default function Navbar() {
         />
       </div>
 
-      {/* Right: Contact */}
       <div>
         <button onClick={handleContactClick} className="font-bold text-base flex items-center gap-1 focus:outline-none">
           Contact <span className="text-xs">↗</span>
