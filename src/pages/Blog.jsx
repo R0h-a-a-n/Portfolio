@@ -1,11 +1,9 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
-// Use require.context with raw-loader to import all markdown files as raw text
 const mdContext = require.context('!!raw-loader!../blogs', false, /\.md$/);
 
 function parseFrontmatter(md) {
-  // Simple frontmatter parser: expects ---\ntitle: ...\nsummary: ...\nslug: ...\n---
   const match = md.match(/^---([\s\S]*?)---/);
   if (!match) return {};
   const lines = match[1].split('\n').map(l => l.trim()).filter(Boolean);
@@ -33,26 +31,26 @@ export default function Blog() {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col items-center px-4 py-24" style={{background: 'none'}}>
+    <div className="min-h-screen flex flex-col items-center px-4 py-24 text-black dark:text-white" style={{background: 'none'}}>
       <div className="max-w-3xl w-full mb-10">
-        <h1 className="text-5xl font-extrabold mb-4 text-gray-900">My Blogs</h1>
-        <p className="text-lg text-gray-700 mb-8">
+        <h1 className="text-5xl font-extrabold mb-4 text-gray-900 dark:text-white">My Blogs</h1>
+        <p className="text-lg text-gray-700 dark:text-gray-200 mb-8">
           Read my latest posts on software, AI, and engineering. Click a post to read more.<br />
 
         </p>
       </div>
       <div className="max-w-3xl w-full flex flex-col gap-8">
         {posts.length === 0 && (
-          <div className="text-gray-500 italic">No blog posts found. Add a markdown file to <b>src/blogs/</b>.</div>
+          <div className="text-gray-500 dark:text-gray-400 italic">No blog posts found. Add a markdown file to <b>src/blogs/</b>.</div>
         )}
         {posts.map(post => (
           <Link
             key={post.slug}
             to={`/blog/${post.slug}`}
-            className="block rounded-xl border border-gray-300 bg-white/90 shadow-md p-8 hover:shadow-lg transition-all duration-200 group"
+            className="block rounded-xl border border-gray-300 bg-white/90 dark:bg-gray-900/90 shadow-md p-8 hover:shadow-lg transition-all duration-200 group"
           >
-            <h2 className="text-2xl font-bold text-gray-900 group-hover:text-indigo-600 mb-2">{post.title}</h2>
-            <p className="text-gray-700 text-lg">{post.summary}</p>
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white group-hover:text-indigo-600 mb-2">{post.title}</h2>
+            <p className="text-gray-700 dark:text-gray-200 text-lg">{post.summary}</p>
           </Link>
         ))}
       </div>
