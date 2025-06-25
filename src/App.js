@@ -5,6 +5,7 @@ import React from 'react';
 import ProjectsPage from './pages/ProjectsPage';
 import BlogPost from './pages/BlogPost';
 import Blog from './pages/Blog';
+import { Analytics } from "@vercel/analytics/react";
 
 function About() {
   return <div className="min-h-screen flex items-center justify-center"><h2 className="text-3xl font-bold">About Page (Coming Soon)</h2></div>;
@@ -20,16 +21,19 @@ function GitHubIcon() {
 
 function App() {
   return (
-    <Router>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/projects" element={<ProjectsPage />} />
-        <Route path="/blog" element={<Blog />} />
-        <Route path="/blog/:slug" element={<BlogPost />} />
-      </Routes>
-    </Router>
+    <>
+      <Router>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/projects" element={<ProjectsPage />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:slug" element={<BlogPost />} />
+        </Routes>
+      </Router>
+      <Analytics />
+    </>
   );
 }
 
