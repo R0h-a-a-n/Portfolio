@@ -2,7 +2,6 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { marked } from 'marked';
 
-// Use require.context with raw-loader to import all markdown files as raw text
 const mdContext = require.context('!!raw-loader!../blogs', false, /\.md$/);
 
 function findMdBySlug(slug) {
@@ -32,7 +31,7 @@ export default function BlogPost() {
       setNotFound(true);
       return;
     }
-    // Remove frontmatter
+
     const body = md.replace(/^---([\s\S]*?)---/, '').trim();
     setContent(marked.parse(body));
   }, [slug]);
