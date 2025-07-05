@@ -3,7 +3,6 @@ title: My experience with winery
 summary: A very effective open source tool for porting exe files in macos
 slug: kegworks-winery
 ---
-Okay, got it\! Let's make this sound like a human, not a robot, and keep it casual.
 
 # How I Got My Windows Apps Running on macOS with Winery + KegWorks (No Heavy VMs\!)
 
