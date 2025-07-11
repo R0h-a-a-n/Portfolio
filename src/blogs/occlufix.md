@@ -1,6 +1,6 @@
 ---
 title: Occlufix – Face inpainting model Unet based
-summary: A causal inference platform for multivariate time series data.
+summary: A powerful UNET based model for face inpainting
 slug: occlufix-face-inpainting-with-perceptual-and-adversarial-losses
 ---
 

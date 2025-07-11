@@ -1,6 +1,6 @@
 ---
 title: Causana – Temporal Causal Inference Explorer
-summary: Built an end-to-end causal analysis platform for discovering time-lagged relationships in multivariate time series data using a modular backend and interactive frontend.
+summary: End-to-end causal analysis platform for discovering time-lagged relationships in multivariate time series data 
 slug: causana-temporal-causal-inference-explorer
 ---
 

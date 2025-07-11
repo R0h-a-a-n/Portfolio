@@ -1,6 +1,6 @@
 ---
 title: Convidat – ML Based eco tourism project
-summary: A causal inference platform for multivariate time series data.
+summary: An AI Powered fullstack solution for eco-safe travel
 slug: convidat-ai-powered-sustainable-tourism-platform
 ---
 
