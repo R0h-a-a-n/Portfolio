@@ -69,18 +69,25 @@ export default function Navbar() {
     }
   };
 
-  // Close mobile menu on route change
+
   useEffect(() => {
     setMobileOpen(false);
   }, [location.pathname]);
 
+  
+  // Navbar background should match body (polka dot pattern) except for /projects
+  const navbarBg = location.pathname.startsWith('/projects')
+    ? 'bg-white dark:bg-black'
+    : 'bg-[radial-gradient(rgba(0,0,0,0.22)_1.5px,transparent_1.5px),radial-gradient(rgba(0,0,0,0.22)_1.5px,#f8f5f2_1.5px)] dark:bg-[radial-gradient(rgba(250,204,21,0.30)_1.5px,transparent_1.5px),radial-gradient(rgba(250,204,21,0.30)_1.5px,#111_1.5px)] bg-[length:32px_32px] bg-[position:0_0,16px_16px]';
+
+
   return (
-    <nav className="w-full flex justify-between items-center h-20 px-4 md:px-8 bg-transparent text-black dark:text-white relative z-50">
+    <nav className={`w-full flex justify-between items-center h-20 px-4 md:px-8 text-black dark:text-white relative z-50 ${navbarBg}`}>
       <div className="font-bold text-lg">
         <button onClick={handleHomeClick} className={navItemClass}>Home</button>
       </div>
 
-      {/* Desktop Nav */}
+      
       <div className="hidden md:flex flex-col items-center">
         <div className="flex space-x-8 font-bold text-base">
           <motion.button variants={{}} whileHover="hover" onClick={handleProjectsClick} className={navItemClass}>Projects</motion.button>
@@ -96,7 +103,7 @@ export default function Navbar() {
         />
       </div>
 
-      {/* Mobile Hamburger */}
+      
       <div className="md:hidden flex items-center">
         <ThemeToggle />
         <button
@@ -110,7 +117,7 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Mobile Dropdown */}
+      
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
@@ -129,7 +136,7 @@ export default function Navbar() {
         )}
       </AnimatePresence>
 
-      {/* Desktop Contact */}
+      
       <div className="hidden md:flex items-center">
         <ThemeToggle />
         <button onClick={handleContactClick} className={navItemClass + ' font-bold text-base flex items-center gap-1 ml-4'}>

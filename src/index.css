@@ -14,8 +14,8 @@ body {
 .dark body {
   background-color: #111111;
   background-image:
-    radial-gradient(rgba(250,204,21,0.50) 1.5px, transparent 1.5px),
-    radial-gradient(rgba(250,204,21,0.50) 1.5px, #111111 1.5px);
+    radial-gradient(rgba(250,204,21,0.30) 1.5px, transparent 1.5px),
+    radial-gradient(rgba(250,204,21,0.30) 1.5px, #111111 1.5px);
   background-size: 32px 32px;
   background-position: 0 0, 16px 16px;
 }
