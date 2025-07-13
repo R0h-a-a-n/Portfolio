@@ -76,16 +76,16 @@ export default function Home() {
         transition={{ duration: 0.3 }}
         className="relative flex justify-center items-center w-full h-screen px-4 py-24 text-black dark:text-white transition-colors duration-300"
       >
-        <span className="absolute top-8 left-8 text-2xl text-gray-300 select-none">
+        <span className="absolute top-8 left-8 text-2xl text-gray-700 dark:text-gray-200 select-none">
           &#x250C;
         </span>
-        <span className="absolute top-8 right-8 text-2xl text-gray-300 select-none">
+        <span className="absolute top-8 right-8 text-2xl text-gray-700 dark:text-gray-200 select-none">
           &#x2510;
         </span>
-        <span className="absolute bottom-8 left-8 text-2xl text-gray-300 select-none">
+        <span className="absolute bottom-8 left-8 text-2xl text-gray-700 dark:text-gray-200 select-none">
           &#x2514;
         </span>
-        <span className="absolute bottom-8 right-8 text-2xl text-gray-300 select-none">
+        <span className="absolute bottom-8 right-8 text-2xl text-gray-700 dark:text-gray-200 select-none">
           &#x2518;
         </span>
 
@@ -160,7 +160,7 @@ export default function Home() {
               </h3>
               <div className="h-[1px] bg-black w-1/2 mb-4" />
               <div className="flex flex-col space-y-4">
-                {['Spring Boot','FastAPI','React.js','Flask','Express'].map((fw,i)=>(
+                {['Spring Boot','FastAPI','React.js','Flask','Express', 'Pytorch', 'Tensorflow'].map((fw,i)=>(
                   <motion.div
                     key={fw}
                     initial={{ x: 100 }}

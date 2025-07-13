@@ -46,7 +46,7 @@ export default function Footer() {
         </div>
         <div className="mb-8">
           <a
-            href="https://drive.google.com/file/d/1dHQZzuIZpvwDFkFpNfrPK2jSLzLWfrRU/view?usp=sharing"
+            href="https://drive.google.com/drive/folders/1X5CBzZxcyMRSiu7u1w-vdxJuXVBU0T8m?usp=sharing"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-block bg-black dark:bg-white text-white dark:text-black font-semibold py-3 px-8 rounded-md hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors duration-300"

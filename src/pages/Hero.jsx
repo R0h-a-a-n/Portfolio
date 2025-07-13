@@ -69,7 +69,7 @@ export default function Hero() {
         transition={{ delay: 1.2, duration: 0.8 }}
         className="absolute bottom-10 right-10 text-black dark:text-white font-bold text-xl flex items-center gap-2"
       >
-        Scroll <span className="text-2xl">↘</span>
+        <span className="text-2xl"></span>
       </motion.div>
     </section>
   );
