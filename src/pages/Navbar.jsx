@@ -39,9 +39,13 @@ export default function Navbar() {
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
 
+  const isProjects = location.pathname.startsWith('/projects');
   const navItemClass =
-    "focus:outline-none text-black dark:text-white transition-all duration-200 rounded-lg px-3 py-1 " +
-    "hover:bg-black hover:text-white dark:hover:bg-yellow-300 dark:hover:text-black hover:scale-105 w-full text-left";
+  (isProjects
+    ? "text-white"
+    : "text-black dark:text-white") +
+  " focus:outline-none transition-all duration-200 rounded-lg px-3 py-1 " +
+  "hover:bg-black hover:text-white dark:hover:bg-yellow-300 dark:hover:text-black hover:scale-105 w-full text-left";
 
   const handleProjectsClick = () => {
     setMobileOpen(false);
@@ -75,14 +79,16 @@ export default function Navbar() {
   }, [location.pathname]);
 
   
-  // Navbar background should match body (polka dot pattern) except for /projects
-  const navbarBg = location.pathname.startsWith('/projects')
-    ? 'bg-white dark:bg-black'
-    : 'bg-[radial-gradient(rgba(0,0,0,0.22)_1.5px,transparent_1.5px),radial-gradient(rgba(0,0,0,0.22)_1.5px,#f8f5f2_1.5px)] dark:bg-[radial-gradient(rgba(250,204,21,0.30)_1.5px,transparent_1.5px),radial-gradient(rgba(250,204,21,0.30)_1.5px,#111_1.5px)] bg-[length:32px_32px] bg-[position:0_0,16px_16px]';
+  
+  
+  const navbarBg = isProjects
+  ? 'bg-black'
+  : 'bg-[radial-gradient(rgba(0,0,0,0.22)_1.5px,transparent_1.5px)] dark:bg-[radial-gradient(rgba(250,204,21,0.30)_1.5px,transparent_1.5px)] bg-[length:32px_32px] bg-[position:0_0]';
 
+  const navbarText = isProjects ? 'text-white' : 'text-black dark:text-white';
 
   return (
-    <nav className={`w-full flex justify-between items-center h-20 px-4 md:px-8 text-black dark:text-white relative z-50 ${navbarBg}`}>
+    <nav className={`w-full flex justify-between items-center h-20 px-4 md:px-8 relative z-50 ${navbarBg} ${navbarText}`}>
       <div className="font-bold text-lg">
         <button onClick={handleHomeClick} className={navItemClass}>Home</button>
       </div>

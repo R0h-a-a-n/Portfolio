@@ -1,4 +1,3 @@
-// INSTRUCTIONS: To add your own project images, upload them to the public/projects/ folder (e.g., public/projects/causana1.jpg). Then, in the images array for each project below, use paths like '/projects/causana1.jpg'.
 
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -20,12 +19,10 @@ function ProjectSection({ project }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.5 });
 
-  // Fade overlay text when mouse is near center
   function handleMouseMove(e) {
     const { clientX, clientY } = e;
     const w = window.innerWidth;
     const h = window.innerHeight;
-    // Center 40% of screen triggers fade
     const centerX = w * 0.3 < clientX && clientX < w * 0.7;
     const centerY = h * 0.3 < clientY && clientY < h * 0.7;
     setCenterHover(centerX && centerY);
@@ -44,7 +41,6 @@ function ProjectSection({ project }) {
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
-      {/* Background image or gray fallback */}
       {project.images && project.images.length > 0 ? (
         <motion.img
           key={imgIdx}
@@ -53,15 +49,13 @@ function ProjectSection({ project }) {
           initial={{ opacity: 0, scale: 1.04 }}
           animate={{ opacity: isInView ? 1 : 0, scale: 1 }}
           transition={{ duration: 0.7 }}
-          className="absolute inset-0 w-full h-full min-h-screen object-contain bg-gray-900 z-0 select-none pointer-events-none"
+          className="absolute inset-0 w-full h-full min-h-screen object-contain bg-black z-0 select-none pointer-events-none"
           draggable={false}
         />
       ) : (
-        <div className="absolute inset-0 w-full h-full min-h-screen bg-gray-900 z-0" />
+        <div className="absolute inset-0 w-full h-full min-h-screen bg-black z-0" />
       )}
-      {/* Gradient overlay for readability */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80 z-10" />
-      {/* Carousel arrows */}
       {project.images && project.images.length > 1 && (
         <>
           <button
@@ -80,7 +74,6 @@ function ProjectSection({ project }) {
           </button>
         </>
       )}
-      {/* Dots for carousel */}
       {project.images && project.images.length > 1 && (
         <div className="absolute bottom-32 left-1/2 -translate-x-1/2 flex gap-2 z-20">
           {project.images.map((_, i) => (
@@ -88,36 +81,35 @@ function ProjectSection({ project }) {
           ))}
         </div>
       )}
-      {/* Overlayed text */}
       <motion.div
-        className="relative z-20 w-full max-w-5xl px-10 pb-16 md:pb-24 flex flex-col items-start"
+        className="relative z-20 w-full max-w-5xl px-10 pb-16 md:pb-24 flex flex-col items-start text-white dark:text-white"
         animate={{ opacity: centerHover ? 0 : 1 }}
         transition={{ duration: 0.5 }}
       >
-        <div className="flex items-center gap-1 mb-4">
-          <h2 className="text-4xl md:text-5xl font-extrabold text-white drop-shadow-lg">
-            {project.title}
-          </h2>
+        <h2 className="text-4xl md:text-5xl font-extrabold text-white drop-shadow-lg mb-4">
+          {project.title}
+        </h2>
+        <p className="text-xl md:text-2xl text-white font-medium mb-6 drop-shadow-lg max-w-2xl">
+          {summary}
+        </p>
+        <div className="flex items-center gap-3 mt-2">
           <a
             href={project.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:scale-110 transition-transform ml-1"
+            className="hover:scale-110 transition-transform"
             aria-label="GitHub Repository"
             onClick={e => e.stopPropagation()}
           >
             <GitHubIcon />
           </a>
+          <button
+            className="px-6 py-2 bg-white/90 text-black rounded-lg font-semibold shadow hover:bg-yellow-400 transition-colors duration-200 text-lg dark:text-black"
+            onClick={e => { e.stopPropagation(); navigate(`/blog/${project.slug}`); }}
+          >
+            Read Full Blog
+          </button>
         </div>
-        <p className="text-xl md:text-2xl text-gray-200 font-medium mb-6 drop-shadow-lg max-w-2xl">
-          {summary}
-        </p>
-        <button
-          className="mt-2 px-6 py-2 bg-white/90 text-black rounded-lg font-semibold shadow hover:bg-yellow-400 transition-colors duration-200 text-lg"
-          onClick={e => { e.stopPropagation(); navigate(`/blog/${project.slug}`); }}
-        >
-          Read Full Blog
-        </button>
       </motion.div>
     </section>
   );
@@ -130,7 +122,6 @@ function ProjectsPage() {
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollTop = 0;
     }
-    // Remove polka dot pattern from navbar for /projects only
     const navbar = document.querySelector('nav');
     if (navbar) {
       navbar.style.backgroundImage = 'none';
@@ -164,8 +155,13 @@ function ProjectsPage() {
       slug: 'convidat-ai-powered-sustainable-tourism-platform',
       github: 'https://github.com/R0h-a-a-n/Convidat',
       images: [
-        '/projects/convidat1.jpg',
-        '/projects/convidat2.jpg',
+        '/projects/convidat1.png',
+        '/projects/convidat2.png',
+        '/projects/convidat3.png',
+        '/projects/convidat4.png',
+        '/projects/convidat5.png',
+        '/projects/convidat6.png',
+        '/projects/convidat7.png',
       ],
       summary: 'Production-grade MERN microservices platform for eco-conscious tourism.',
       bullets: [
