@@ -137,7 +137,7 @@ export default function Home() {
               <h3 className="text-2xl font-bold text-black dark:text-white mb-2">
                 Languages
               </h3>
-              <div className="h-[1px] bg-black w-1/2 mb-4" />
+              <div className="h-[1px] bg-black dark:bg-white w-1/2 mb-4" />
               <div className="flex flex-col space-y-4">
                 {['Python','Java','JavaScript','TypeScript','Go','C','C++'].map((lang,i)=>(
                   <motion.div
@@ -158,7 +158,7 @@ export default function Home() {
               <h3 className="text-2xl font-bold text-black dark:text-white mt-6 mb-2">
                 Frameworks
               </h3>
-              <div className="h-[1px] bg-black w-1/2 mb-4" />
+              <div className="h-[1px] bg-black dark:bg-white w-1/2 mb-4" />
               <div className="flex flex-col space-y-4">
                 {['Spring Boot','FastAPI','React.js','Flask','Express', 'Pytorch', 'Tensorflow'].map((fw,i)=>(
                   <motion.div
@@ -179,7 +179,7 @@ export default function Home() {
               <h3 className="text-2xl font-bold text-black dark:text-white mt-6 mb-2">
                 Tools
               </h3>
-              <div className="h-[1px] bg-black w-1/2 mb-4" />
+              <div className="h-[1px] bg-black dark:bg-white w-1/2 mb-4" />
               <div className="flex flex-col space-y-4">
                 {['Git','Docker','PostgreSQL','MongoDB','Redis','AWS','Postman'].map((tool,i)=>(
                   <motion.div
