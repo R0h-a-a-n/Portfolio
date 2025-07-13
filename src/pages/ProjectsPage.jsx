@@ -12,17 +12,21 @@ function GitHubIcon() {
   );
 }
 
-function ProjectSection({ project }) {
+function ProjectSection({ project, isActive }) {
   const navigate = useNavigate();
   const [imgIdx, setImgIdx] = useState(0);
   const [centerHover, setCenterHover] = useState(false);
+  const [isSwitchingImage, setIsSwitchingImage] = useState(false);
+  const [arrowHover, setArrowHover] = useState(false);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.5 });
 
+  // Fade overlay text when mouse is near center
   function handleMouseMove(e) {
     const { clientX, clientY } = e;
     const w = window.innerWidth;
     const h = window.innerHeight;
+    // Center 40% of screen triggers fade
     const centerX = w * 0.3 < clientX && clientX < w * 0.7;
     const centerY = h * 0.3 < clientY && clientY < h * 0.7;
     setCenterHover(centerX && centerY);
@@ -31,7 +35,30 @@ function ProjectSection({ project }) {
     setCenterHover(false);
   }
 
+  // Hide overlay when switching images
+  function handlePrev(e) {
+    e.stopPropagation();
+    setIsSwitchingImage(true);
+    setImgIdx((prev) => (prev - 1 + project.images.length) % project.images.length);
+    setTimeout(() => setIsSwitchingImage(false), 400);
+  }
+  function handleNext(e) {
+    e.stopPropagation();
+    setIsSwitchingImage(true);
+    setImgIdx((prev) => (prev + 1) % project.images.length);
+    setTimeout(() => setIsSwitchingImage(false), 400);
+  }
+
+  // Hide overlay when hovering over carousel arrows
+  function handleArrowEnter() {
+    setArrowHover(true);
+  }
+  function handleArrowLeave() {
+    setArrowHover(false);
+  }
+
   const summary = project.summary || project.bullets[0];
+  const overlayVisible = !centerHover && !isSwitchingImage && !arrowHover;
 
   return (
     <section
@@ -41,6 +68,7 @@ function ProjectSection({ project }) {
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
+      {/* Background image or gray fallback */}
       {project.images && project.images.length > 0 ? (
         <motion.img
           key={imgIdx}
@@ -55,18 +83,24 @@ function ProjectSection({ project }) {
       ) : (
         <div className="absolute inset-0 w-full h-full min-h-screen bg-black z-0" />
       )}
+      {/* Gradient overlay for readability */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80 z-10" />
+      {/* Carousel arrows */}
       {project.images && project.images.length > 1 && (
         <>
           <button
-            onClick={e => { e.stopPropagation(); setImgIdx((prev) => (prev - 1 + project.images.length) % project.images.length); }}
+            onClick={handlePrev}
+            onMouseEnter={handleArrowEnter}
+            onMouseLeave={handleArrowLeave}
             className="absolute left-6 top-1/2 -translate-y-1/2 z-20 bg-black/40 hover:bg-black/70 text-white rounded-full p-3 shadow-lg border border-white/20"
             aria-label="Previous image"
           >
             &#8592;
           </button>
           <button
-            onClick={e => { e.stopPropagation(); setImgIdx((prev) => (prev + 1) % project.images.length); }}
+            onClick={handleNext}
+            onMouseEnter={handleArrowEnter}
+            onMouseLeave={handleArrowLeave}
             className="absolute right-6 top-1/2 -translate-y-1/2 z-20 bg-black/40 hover:bg-black/70 text-white rounded-full p-3 shadow-lg border border-white/20"
             aria-label="Next image"
           >
@@ -74,6 +108,7 @@ function ProjectSection({ project }) {
           </button>
         </>
       )}
+      {/* Dots for carousel */}
       {project.images && project.images.length > 1 && (
         <div className="absolute bottom-32 left-1/2 -translate-x-1/2 flex gap-2 z-20">
           {project.images.map((_, i) => (
@@ -81,9 +116,10 @@ function ProjectSection({ project }) {
           ))}
         </div>
       )}
+      {/* Overlayed text */}
       <motion.div
         className="relative z-20 w-full max-w-5xl px-10 pb-16 md:pb-24 flex flex-col items-start text-white dark:text-white"
-        animate={{ opacity: centerHover ? 0 : 1 }}
+        animate={{ opacity: overlayVisible ? 1 : 0 }}
         transition={{ duration: 0.5 }}
       >
         <h2 className="text-4xl md:text-5xl font-extrabold text-white drop-shadow-lg mb-4">
@@ -117,19 +153,33 @@ function ProjectSection({ project }) {
 
 function ProjectsPage() {
   const scrollContainerRef = useRef(null);
+  const [currentProjectIdx, setCurrentProjectIdx] = useState(0);
 
   useEffect(() => {
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollTop = 0;
     }
-    const navbar = document.querySelector('nav');
-    if (navbar) {
-      navbar.style.backgroundImage = 'none';
-    }
-    return () => {
-      if (navbar) {
-        navbar.style.backgroundImage = '';
+    // Scroll event to update current project index
+    const handleScroll = () => {
+      if (!scrollContainerRef.current) return;
+      const sections = Array.from(scrollContainerRef.current.children).filter(
+        el => el.tagName === 'SECTION'
+      );
+      const vh = window.innerHeight;
+      let idx = 0;
+      for (let i = 0; i < sections.length; i++) {
+        const rect = sections[i].getBoundingClientRect();
+        if (rect.top < vh / 2 && rect.bottom > vh / 2) {
+          idx = i;
+          break;
+        }
       }
+      setCurrentProjectIdx(idx);
+    };
+    const container = scrollContainerRef.current;
+    if (container) container.addEventListener('scroll', handleScroll);
+    return () => {
+      if (container) container.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
@@ -191,9 +241,18 @@ function ProjectsPage() {
   ];
 
   return (
-    <div ref={scrollContainerRef} className="w-full h-screen snap-y snap-mandatory overflow-y-scroll">
-      {projects.map((project) => (
-        <ProjectSection key={project.slug} project={project} />
+    <div ref={scrollContainerRef} className="w-full h-screen snap-y snap-mandatory overflow-y-scroll relative">
+      {/* Vertical project hint */}
+      <div className="fixed right-8 top-1/2 -translate-y-1/2 z-30 flex flex-col items-center gap-2 select-none">
+        {projects.map((_, i) => (
+          <div
+            key={i}
+            className={`w-1.5 h-8 rounded-full transition-all duration-300 ${i === currentProjectIdx ? 'bg-white' : 'bg-white/40'}`}
+          />
+        ))}
+      </div>
+      {projects.map((project, idx) => (
+        <ProjectSection key={project.slug} project={project} isActive={idx === currentProjectIdx} />
       ))}
     </div>
   );
